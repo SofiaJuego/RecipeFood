@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RecipeFood</string>
+
+    //Menu navigation
+    <string name="principal_menu">Principal</string>
+    <string name="favorites_menu">Favoritos</string>
+    <string name="categories_menu">Categorias</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
