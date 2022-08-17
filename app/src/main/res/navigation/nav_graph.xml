@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.apis.recipefood.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailMealActivity"
+            app:destination="@id/detailMealActivity" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.apis.recipefood.fragments.FavoritesFragment"
@@ -20,4 +24,9 @@
         android:name="com.apis.recipefood.fragments.CategoriesFragment"
         android:label="fragment_categories"
         tools:layout="@layout/fragment_categories" />
+    <activity
+        android:id="@+id/detailMealActivity"
+        android:name="com.apis.recipefood.activites.DetailMealActivity"
+        android:label="activity_detail_meal"
+        tools:layout="@layout/activity_detail_meal" />
 </navigation>
