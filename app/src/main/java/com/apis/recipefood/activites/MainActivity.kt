@@ -1,10 +1,12 @@
-package com.apis.recipefood
+package com.apis.recipefood.activites
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.apis.recipefood.R
 import com.apis.recipefood.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 

@@ -10,7 +10,7 @@
 
 
     //Paleta de colores de la app
-    <color name="yellow">#FFFF8D</color>
-    <color name="yellow_dark">#cacc5d</color>
+    <color name="yellow">#ffe0b2</color>
+    <color name="yellow_dark">#cbae82</color>
     <color name="grey">#7A7A7A</color>
 </resources>

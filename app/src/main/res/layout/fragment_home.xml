@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context="com.apis.recipefood.fragments.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -76,7 +76,8 @@
             android:id="@+id/iv_random_meal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/yellow" />
+            android:background="@color/yellow"
+            android:scaleType="centerCrop"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
