@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.apis.recipefood.pojo.CategoryList
+import com.apis.recipefood.pojo.CategoryMeals
 import com.apis.recipefood.pojo.Meal
 import com.apis.recipefood.pojo.MealList
 import com.apis.recipefood.retrofit.RetrofitInstance
@@ -16,9 +18,11 @@ import retrofit2.Retrofit
 class MealViewModel (application: Application) : AndroidViewModel(application){
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var detailsMealLiveData = MutableLiveData<Meal>()
+    private var popularItemsLiveData = MutableLiveData<List<CategoryMeals>>()
 
 
     //<!-- OBTENGO COMIDA ALEATORIA -->
+
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeals().enqueue(object : Callback<MealList> {
             //Conectando con la api
@@ -60,6 +64,29 @@ class MealViewModel (application: Application) : AndroidViewModel(application){
     //Escuchador detalle
     fun observerDetailMealLiveData():LiveData<Meal>{
         return detailsMealLiveData
+    }
+
+
+    //<!-- OBTENGO COMIDA POPULARES -->
+
+    fun getPopularItems(){
+        RetrofitInstance.api.getPopularItems("Seafood").enqueue(object : Callback<CategoryList>{
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+                if (response.body() != null){
+                    popularItemsLiveData.value = response.body()!!.meals
+                }
+
+            }
+
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+                Log.d("HomeFragment", t.message.toString()) }
+
+        })
+    }
+
+    //Escuchador de items populares
+    fun observerPopularItemsLiveData():LiveData<List<CategoryMeals>>{
+        return popularItemsLiveData
     }
 
 
