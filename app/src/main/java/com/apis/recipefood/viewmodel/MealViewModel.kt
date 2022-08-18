@@ -15,8 +15,10 @@ import retrofit2.Retrofit
 
 class MealViewModel (application: Application) : AndroidViewModel(application){
     private var randomMealLiveData = MutableLiveData<Meal>()
+    private var detailsMealLiveData = MutableLiveData<Meal>()
 
-    //OBTENGO COMIDA ALEATORIA
+
+    //<!-- OBTENGO COMIDA ALEATORIA -->
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeals().enqueue(object : Callback<MealList> {
             //Conectando con la api
@@ -28,7 +30,6 @@ class MealViewModel (application: Application) : AndroidViewModel(application){
                     return
                 }
             }
-
             override fun onFailure(call: Call<MealList>, t: Throwable) {
                 Log.d("HomeFragment", t.message.toString()) }
         })
@@ -37,5 +38,31 @@ class MealViewModel (application: Application) : AndroidViewModel(application){
     fun observerRamdonMealLiveData():LiveData<Meal>{
         return randomMealLiveData
     }
+
+    //<!-- OBTENGO DETALLE DE COMIDA -->
+
+    fun getDetailMeal(id:String){
+        RetrofitInstance.api.getDetailsMeals(id).enqueue(object : Callback<MealList>{
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                if (response.body() != null){
+                    detailsMealLiveData.value = response.body()!!.meals[0]
+                }
+                else return
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.d("DetailMealActivity", t.message.toString())
+            }
+
+        })
+
+    }
+    //Escuchador detalle
+    fun observerDetailMealLiveData():LiveData<Meal>{
+        return detailsMealLiveData
+    }
+
+
+
 
 }
