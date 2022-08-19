@@ -8,7 +8,9 @@ import com.apis.recipefood.pojo.Category
 import com.bumptech.glide.Glide
 
 
-class CategoriesAdapter():RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+class CategoriesAdapter :RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+
+    var onItemClick : ((Category) -> Unit)? = null
 
     private var categoriesList = ArrayList<Category>()
 
@@ -30,6 +32,10 @@ class CategoriesAdapter():RecyclerView.Adapter<CategoriesAdapter.CategoryViewHol
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         Glide.with(holder.itemView).load(categoriesList[position].strCategoryThumb).into(holder.binding.ivCategory)
         holder.binding.tvCategoryName.text=categoriesList[position].strCategory
+
+        holder.itemView.setOnClickListener {
+            onItemClick!!.invoke(categoriesList[position])
+        }
     }
 
     override fun getItemCount(): Int {

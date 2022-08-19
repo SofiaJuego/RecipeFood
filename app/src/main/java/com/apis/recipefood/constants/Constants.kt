@@ -11,5 +11,8 @@ class Constants{
     const val MEAL_NAME = "com.apis.recipefood.fragments.nameMeal"
        //Imagen de comida
     const val MEAL_THUMB = "com.apis.recipefood.fragments.thumbMeal"
+       //Nombre de categoria
+    const val CATEGORY_NAME = "com.apis.recipefood.fragments.categoryName"
+
 }
 }

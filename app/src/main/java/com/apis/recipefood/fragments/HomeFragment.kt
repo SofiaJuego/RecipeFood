@@ -11,6 +11,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.apis.recipefood.activites.CategoryMealsActivity
 import com.apis.recipefood.activites.DetailMealActivity
 import com.apis.recipefood.adapter.CategoriesAdapter
 import com.apis.recipefood.adapter.MealAdapter
@@ -60,11 +61,14 @@ class HomeFragment : Fragment() {
         //CM
         mealViewModel.getCategories()
         observerCategories()
+        onCategoryClick()
 
 
 
 
     }
+
+
     //RecyclerView
     private fun categoriesRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
@@ -91,6 +95,14 @@ class HomeFragment : Fragment() {
                 categoriesAdapter.setCategoryList(categories)
 
             }
+        }
+    }
+
+    private fun onCategoryClick() {
+        categoriesAdapter.onItemClick = {category ->
+            val intent = Intent(activity,CategoryMealsActivity::class.java)
+            intent.putExtra(Constants.CATEGORY_NAME,category.strCategory)
+            startActivity(intent)
         }
     }
 

@@ -29,13 +29,14 @@ class DetailMealActivity : AppCompatActivity() {
         binding= ActivityDetailMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //RM
         getRandomMealInformation()
         setInformationInView()
-
+        //DM
         loadingCase()
         mealMvvm.getDetailMeal(mealId)
         observerDetailMeal()
-
+        //Youtube
         onYoutubeImageClick()
     }
     //Cuando hago click en imagen de youtube
@@ -47,7 +48,7 @@ class DetailMealActivity : AppCompatActivity() {
         }
 
     }
-
+    //Escuchador
     @SuppressLint("SetTextI18n")
     private fun observerDetailMeal() {
         mealMvvm.observerDetailMealLiveData().observe(this
