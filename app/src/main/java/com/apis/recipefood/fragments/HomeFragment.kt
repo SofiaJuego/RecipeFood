@@ -2,14 +2,17 @@ package com.apis.recipefood.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apis.recipefood.activites.DetailMealActivity
+import com.apis.recipefood.adapter.CategoriesAdapter
 import com.apis.recipefood.adapter.MealAdapter
 import com.apis.recipefood.constants.Constants
 import com.apis.recipefood.databinding.FragmentHomeBinding
@@ -24,6 +27,7 @@ class HomeFragment : Fragment() {
     private  val mealViewModel :MealViewModel by viewModels()
     private lateinit var randomMeal:Meal
     private lateinit var mealAdapter: MealAdapter
+    private lateinit var categoriesAdapter: CategoriesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,29 +43,54 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mealAdapter = MealAdapter()
 
-
-
+        //RV
         popularItemsRecyclerView()
+        categoriesRecyclerView()
 
+        //RM
        mealViewModel.getRandomMeal()
         observerRandomMeal()
         onRandomMealClick()
 
+        //PM
         mealViewModel.getPopularItems()
         observerPopularItems()
         onPopularItemClick()
 
+        //CM
+        mealViewModel.getCategories()
+        observerCategories()
+
+
+
 
     }
-
-
     //RecyclerView
+    private fun categoriesRecyclerView() {
+        categoriesAdapter = CategoriesAdapter()
+        binding.rvMealsCategories.apply {
+            layoutManager=GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
+            adapter = categoriesAdapter
+
+        }
+    }
+
     private fun popularItemsRecyclerView() {
         binding.rvMealsPopular.apply {
             layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
             adapter = mealAdapter
 
 
+        }
+    }
+
+    //<!-- CATEGORIAS -->
+    private fun observerCategories() {
+        mealViewModel.observerCategoriesLiveData().observe(viewLifecycleOwner) { categories ->
+            categories.forEach { _ ->
+                categoriesAdapter.setCategoryList(categories)
+
+            }
         }
     }
 

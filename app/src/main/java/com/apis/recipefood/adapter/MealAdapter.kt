@@ -1,6 +1,6 @@
 package com.apis.recipefood.adapter
 
-import android.provider.Settings
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
