@@ -6,136 +6,154 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.apis.recipefood.fragments.HomeFragment">
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/ll_header"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:id="@+id/ll_header"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_home"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/barlow_semibolditalic"
-            android:text="@string/principal_menu"
-            android:textColor="@color/yellow_dark"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/barlow_semibolditalic"
+                    android:text="@string/principal_menu"
+                    android:textColor="@color/black"
+                    android:textSize="37sp"
+                    android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_search" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_que_te_gustaria_comer_hoy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/barlow_regular"
-        android:text="¿Que te gustaria comer hoy?"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/ll_header"
-        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
+            <TextView
+                android:id="@+id/tv_que_te_gustaria_comer_hoy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/barlow_bold"
+                android:text="Recommendation"
+                android:textColor="@color/yellow_dark"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_search" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_random_meal"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="10dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_que_te_gustaria_comer_hoy">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_random_meal"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_que_te_gustaria_comer_hoy">
 
-        <ImageView
-            android:id="@+id/iv_random_meal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/yellow"
-            android:scaleType="centerCrop"/>
-    </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/iv_random_meal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/yellow"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/tv_populares"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/barlow_regular"
-        android:text="Recetas populares"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_que_te_gustaria_comer_hoy"
-        app:layout_constraintTop_toBottomOf="@+id/card_random_meal" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_meals_popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_populares"/>
+            <TextView
+                android:id="@+id/tv_populares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow_bold"
+                android:text="Popular"
+                android:textColor="@color/yellow_dark"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_que_te_gustaria_comer_hoy"
+                app:layout_constraintTop_toBottomOf="@+id/card_random_meal" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_meals_popular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_populares" />
+
 
             <TextView
                 android:id="@+id/tv_categories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/barlow_regular"
-                android:text="Categorias"
-                android:textColor="@color/black"
-                android:textSize="17sp"
+                android:fontFamily="@font/barlow_bold"
+                android:text="Categories"
+                android:textColor="@color/yellow_dark"
+                android:textSize="22sp"
                 android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/rv_meals_categories"
                 app:layout_constraintStart_toStartOf="@+id/tv_populares"
-                app:layout_constraintTop_toBottomOf="@+id/rv_meals_popular" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_meals_popular"
+                tools:ignore="NotSibling" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_categorias_meals"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="10dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_categories">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_categorias_meals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="3dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_categories">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_meals_categories"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_populares"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_meals_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
 
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/search_bg"
+                android:drawableStart="@drawable/ic_search"
+                android:hint="@string/search"
+                android:paddingStart="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/ll_header"
+                app:layout_constraintStart_toStartOf="@+id/ll_header"
+                app:layout_constraintTop_toBottomOf="@+id/ll_header" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
