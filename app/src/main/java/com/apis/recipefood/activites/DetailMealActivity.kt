@@ -4,16 +4,21 @@ package com.apis.recipefood.activites
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.apis.recipefood.constants.Constants.Companion.MEAL_ID
 import com.apis.recipefood.constants.Constants.Companion.MEAL_NAME
 import com.apis.recipefood.constants.Constants.Companion.MEAL_THUMB
 import com.apis.recipefood.databinding.ActivityDetailMealBinding
+import com.apis.recipefood.db.MealDataBase
+import com.apis.recipefood.pojo.Meal
 import com.apis.recipefood.viewmodel.MealViewModel
+import com.apis.recipefood.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
+
 
 class DetailMealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailMealBinding
@@ -22,12 +27,20 @@ class DetailMealActivity : AppCompatActivity() {
     private lateinit var mealName:String
     private lateinit var mealThumb:String
     private lateinit var youtubeLink:String
-    private val mealMvvm:MealViewModel by viewModels()
+    //Instacia de viewmodel
+    private val mealMvvm by viewModels<MealViewModel> { ViewModelFactory(MealDataBase.getDatabase(this)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityDetailMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+        //val mealDataBase = MealDataBase.getDatabase(this)
+        //val viewModelFactory= ViewModelFactory(mealDataBase)
+        //mealMvvm = ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
+
 
         //RM
         getRandomMealInformation()
@@ -38,7 +51,23 @@ class DetailMealActivity : AppCompatActivity() {
         observerDetailMeal()
         //Youtube
         onYoutubeImageClick()
+        //MF
+        onFavoriteClick()
+
+
     }
+
+
+    //Click en boton de favorito
+    private fun onFavoriteClick() {
+       binding.btnFavorite.setOnClickListener {
+            mealtoSave?.let {
+                mealMvvm.insertMeal(it)
+                Toast.makeText(this,"Recipe saved",Toast.LENGTH_SHORT).show()
+            }
+       }
+    }
+
     //Cuando hago click en imagen de youtube
     private fun onYoutubeImageClick() {
 
@@ -50,15 +79,18 @@ class DetailMealActivity : AppCompatActivity() {
     }
     //Escuchador
     @SuppressLint("SetTextI18n")
+
+    private var mealtoSave:Meal?=null
     private fun observerDetailMeal() {
         mealMvvm.observerDetailMealLiveData().observe(this
         ) { t ->
             onResponseCase()
+            mealtoSave= t
             binding.tvCategory.text = "Categoría: ${t!!.strCategory}"
             binding.tvOrigen.text = "Origen: ${t.strArea}"
             binding.tvContenido.text = t.strInstructions
 
-            youtubeLink = t.strYoutube
+            youtubeLink = t.strYoutube.toString()
 
         }
     }
@@ -109,3 +141,4 @@ class DetailMealActivity : AppCompatActivity() {
 
 
 }
+
