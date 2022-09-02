@@ -1,4 +1,4 @@
-package com.apis.recipefood.constants
+package com.apis.recipefood.util
 
 class Constants{
 

@@ -12,21 +12,4 @@ import com.apis.recipefood.pojo.Meal
 abstract class MealDataBase:RoomDatabase() {
 
     abstract fun mealDao():MealDao
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: MealDataBase? = null
-        @Synchronized
-        fun getDatabase(context: Context): MealDataBase{
-            if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                    context,
-                    MealDataBase::class.java,
-                    "mealdb"
-                ).fallbackToDestructiveMigration().build()
-            }
-            return INSTANCE as MealDataBase
-        }
-    }
 }

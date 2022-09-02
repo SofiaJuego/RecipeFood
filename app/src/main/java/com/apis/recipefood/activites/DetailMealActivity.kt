@@ -9,17 +9,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.apis.recipefood.constants.Constants.Companion.MEAL_ID
-import com.apis.recipefood.constants.Constants.Companion.MEAL_NAME
-import com.apis.recipefood.constants.Constants.Companion.MEAL_THUMB
+import com.apis.recipefood.util.Constants.Companion.MEAL_ID
+import com.apis.recipefood.util.Constants.Companion.MEAL_NAME
+import com.apis.recipefood.util.Constants.Companion.MEAL_THUMB
 import com.apis.recipefood.databinding.ActivityDetailMealBinding
-import com.apis.recipefood.db.MealDataBase
 import com.apis.recipefood.pojo.Meal
 import com.apis.recipefood.viewmodel.MealViewModel
-import com.apis.recipefood.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailMealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailMealBinding
 
@@ -28,7 +27,7 @@ class DetailMealActivity : AppCompatActivity() {
     private lateinit var mealThumb:String
     private lateinit var youtubeLink:String
     //Instacia de viewmodel
-    private val mealMvvm by viewModels<MealViewModel> { ViewModelFactory(MealDataBase.getDatabase(this)) }
+    private val mealMvvm:MealViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +35,6 @@ class DetailMealActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
-        //val mealDataBase = MealDataBase.getDatabase(this)
-        //val viewModelFactory= ViewModelFactory(mealDataBase)
-        //mealMvvm = ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
 
 
         //RM

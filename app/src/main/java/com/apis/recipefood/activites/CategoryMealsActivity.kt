@@ -6,13 +6,16 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.apis.recipefood.adapter.CategoryMealsAdapter
-import com.apis.recipefood.constants.Constants
+import com.apis.recipefood.util.Constants
 import com.apis.recipefood.databinding.ActivityCategoryMealsBinding
 import com.apis.recipefood.viewmodel.MealViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CategoryMealsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCategoryMealsBinding
-    private val categoryMealsViewModel: MealViewModel by viewModels()
+    //Instacia de viewmodel
+    private val  categoryMealsViewModel:MealViewModel by viewModels()
     lateinit var categoryMealsAdapter:CategoryMealsAdapter
 
     @SuppressLint("SetTextI18n")

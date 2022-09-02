@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -35,12 +36,16 @@ android {
         viewBinding true
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
+
 
 }
 
 dependencies {
     def retrofitVersion = '2.9.0'
-    def lifecycleVersion = '2.5.1'
+    def lifecycleVersion = '2.6.0-alpha01'
     def roomVersion = '2.4.2'
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -78,6 +83,10 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     //noinspection GradleDependency
     implementation "androidx.room:room-ktx:$roomVersion"
+
+    //Hilt
+    implementation 'com.google.dagger:hilt-android:2.43.2'
+    kapt'com.google.dagger:hilt-android-compiler:2.43.2'
 
 
 

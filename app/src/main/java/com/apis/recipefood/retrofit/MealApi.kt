@@ -5,25 +5,29 @@ import com.apis.recipefood.pojo.CategoryList
 import com.apis.recipefood.pojo.MealList
 import com.apis.recipefood.pojo.MealsCategoriesList
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MealApi {
 
     @GET ("random.php")
-    fun getRandomMeals():Call<MealList>
+   suspend fun getRandomMeals():Response<MealList>
 
     @GET("lookup.php?")
-    fun getDetailsMeals(@Query("i")id:String): Call<MealList>
+    suspend fun getDetailsMeals(@Query("i")id:String): Response<MealList>
 
     @GET("filter.php?")
-    fun getPopularItems(@Query("c")categoryName:String):Call<CategoryList>
+    suspend fun getPopularItems(@Query("c")categoryName:String):Response<CategoryList>
 
     @GET("categories.php")
-    fun getCategories():Call<MealsCategoriesList>
+    suspend fun getCategories():Response<MealsCategoriesList>
 
     @GET("filter.php")
-    fun getMealsByCategory(@Query("c") categoryMealName:String): Call<CategoryList>
+    suspend fun getMealsByCategory(@Query("c") categoryMealName:String): Response<CategoryList>
+
+    @GET("search.php?")
+    suspend fun getMealByName(@Query("s")search:String):Response<MealList>
 
 
 }

@@ -6,8 +6,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.apis.recipefood.R
 import com.apis.recipefood.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
