@@ -13,20 +13,38 @@
         <action
             android:id="@+id/action_homeFragment_to_detailMealActivity"
             app:destination="@id/detailMealActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.apis.recipefood.fragments.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
-    <fragment
-        android:id="@+id/categoriesFragment"
-        android:name="com.apis.recipefood.fragments.CategoriesFragment"
-        android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
     <activity
         android:id="@+id/detailMealActivity"
         android:name="com.apis.recipefood.activites.DetailMealActivity"
         android:label="activity_detail_meal"
         tools:layout="@layout/activity_detail_meal" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.apis.recipefood.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

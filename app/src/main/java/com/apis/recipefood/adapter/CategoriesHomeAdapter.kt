@@ -7,11 +7,11 @@ import com.apis.recipefood.databinding.CategoryItemBinding
 import com.apis.recipefood.pojo.Category
 import com.bumptech.glide.Glide
 
-
-class CategoriesAdapter :RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+//ADAPTER DE CATEGORIAS EN INICIO(home)
+class CategoriesHomeAdapter :RecyclerView.Adapter<CategoriesHomeAdapter.CategoryViewHolder>() {
 
     var onItemClick : ((Category) -> Unit)? = null
-
+    //var onItemLongClick : ((Category) -> Unit)? = null
     private var categoriesList = ArrayList<Category>()
 
     fun setCategoryList(categoriesList: List<Category>){
@@ -36,6 +36,9 @@ class CategoriesAdapter :RecyclerView.Adapter<CategoriesAdapter.CategoryViewHold
         holder.itemView.setOnClickListener {
             onItemClick!!.invoke(categoriesList[position])
         }
+       // holder.itemView.setOnLongClickListener{
+           //onItemLongClick?.invoke(categoriesList[position])
+            //true }
     }
 
     override fun getItemCount(): Int {

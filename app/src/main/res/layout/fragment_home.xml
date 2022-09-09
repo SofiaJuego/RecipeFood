@@ -6,13 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.apis.recipefood.fragments.HomeFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/prepare_food_loading"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"/>
+
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp">
+        tools:layout_editor_absoluteX="-190dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,9 +39,8 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="60dp"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -47,15 +61,15 @@
                 android:id="@+id/tv_que_te_gustaria_comer_hoy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/barlow_bold"
-                android:text="Recommendation"
+                android:text="@string/recomendacion"
                 android:textColor="@color/yellow_dark"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_search" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_search" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_random_meal"
@@ -76,7 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/yellow"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:transitionName="iv_transition" />
             </androidx.cardview.widget.CardView>
 
 
@@ -84,12 +99,12 @@
                 android:id="@+id/tv_populares"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/barlow_bold"
-                android:text="Popular"
+                android:text="@string/popular"
                 android:textColor="@color/yellow_dark"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_que_te_gustaria_comer_hoy"
                 app:layout_constraintTop_toBottomOf="@+id/card_random_meal" />
 
@@ -98,7 +113,7 @@
                 android:id="@+id/rv_meals_popular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_populares" />
@@ -108,12 +123,12 @@
                 android:id="@+id/tv_categories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/barlow_bold"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:textColor="@color/yellow_dark"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/rv_meals_categories"
                 app:layout_constraintStart_toStartOf="@+id/tv_populares"
                 app:layout_constraintTop_toBottomOf="@+id/rv_meals_popular"
@@ -141,18 +156,16 @@
 
             </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/search_bg"
-                android:drawableStart="@drawable/ic_search"
-                android:hint="@string/search"
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="15dp"
                 android:paddingStart="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/ll_header"
-                app:layout_constraintStart_toStartOf="@+id/ll_header"
-                app:layout_constraintTop_toBottomOf="@+id/ll_header" />
+                android:src="@drawable/ic_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ll_header"
+                app:layout_constraintTop_toTopOf="@+id/ll_header" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
