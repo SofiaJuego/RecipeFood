@@ -2,7 +2,9 @@ package com.apis.recipefood.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.TypeConverters
 import com.apis.recipefood.db.MealDataBase
+import com.apis.recipefood.db.MealTypeConverters
 import com.apis.recipefood.retrofit.MealApi
 import dagger.Module
 import dagger.Provides
@@ -45,6 +47,7 @@ class DataSourceModule {
     //Room Instance
     @Singleton
     @Provides
+    @TypeConverters(MealTypeConverters::class)
     fun provideRoomInstance(@ApplicationContext context: Context)
     =
         Room.databaseBuilder(

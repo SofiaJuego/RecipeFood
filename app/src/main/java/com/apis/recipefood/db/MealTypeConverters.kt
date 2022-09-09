@@ -12,7 +12,7 @@ class MealTypeConverters {
             return ""
         return attributes as String
     }
-
+    @TypeConverter
     fun fromStringtoAny(attributes: String?):Any{
         if (attributes == null)
             return ""

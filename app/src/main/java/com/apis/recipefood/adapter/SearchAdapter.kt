@@ -1,46 +1,49 @@
 package com.apis.recipefood.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.apis.recipefood.databinding.FavCardBinding
 import com.apis.recipefood.pojo.Meal
 import com.bumptech.glide.Glide
 
 class SearchAdapter:RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
-    //private var mealsList:List<Meal>  = ArrayList()
-    private var mealsList  = ArrayList<Meal>()
-    lateinit var onItemClick : ((Meal) -> Unit)
 
+    class SearchViewHolder(val binding: FavCardBinding) : RecyclerView.ViewHolder(binding.root)
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setMealsearch(mealsList: List<Meal>){
-        this.mealsList= mealsList as ArrayList<Meal>
-        notifyDataSetChanged()
+    private val diffUtil = object : DiffUtil.ItemCallback<Meal>() {
+        override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
+            return oldItem.idMeal == newItem.idMeal
+        }
+
+        override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
+            return oldItem == newItem
+
+        }
+
     }
 
-    class SearchViewHolder(var binding:FavCardBinding):RecyclerView.ViewHolder(binding.root)
+    val differ = AsyncListDiffer(this, diffUtil)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(FavCardBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        Glide.with(holder.itemView)
-            .load(mealsList[position].strMealThumb)
-            .into(holder.binding.ivFavMeal)
-        holder.binding.tvFavName.text = mealsList[position].strMeal
-
-        holder.itemView.setOnClickListener {
-            onItemClick.invoke(mealsList[position])
-        }
-
+        val meal = differ.currentList[position]
+        Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.ivFavMeal)
+        holder.binding.tvFavName.text = meal.strMeal
     }
 
     override fun getItemCount(): Int {
-       return mealsList.size
+        return differ.currentList.size
     }
 
 
 }
+
+
+
+

@@ -1,6 +1,5 @@
 package com.apis.recipefood.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.apis.recipefood.activites.DetailMealActivity
 import com.apis.recipefood.adapter.SearchAdapter
 import com.apis.recipefood.databinding.FragmentSearchBinding
-import com.apis.recipefood.util.Constants
 import com.apis.recipefood.viewmodel.MealViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -38,29 +35,34 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = SearchAdapter()
 
+        //RC
         searchRecyclerView()
+
         observeSearchLiveData()
-        onSearchClickDetail()
+        click()
+        //onSearchClickDetail()
 
         binding.ivSearch.setOnClickListener {searchMeals()}
 
-        //buscar sin tener que apretar icono
-        var searchJob:Job?=null
-        binding.etSearch.addTextChangedListener{ search ->
-            searchJob?.cancel()
-            searchJob=lifecycleScope.launch{
-                delay(100)
-                viewModel.searchMeal(search.toString())
-            }
 
-        }
+
+
 
 
 
 
     }
 
-    private fun onSearchClickDetail() {
+    private fun searchMeals() {
+        val searchQuery = binding.etSearch.text.toString()
+        if (searchQuery.isNotEmpty()){
+            viewModel.searchMeal(searchQuery)
+        }else{
+            binding.tvNoMealsResult.visibility = View.VISIBLE
+        }
+    }
+
+   /* private fun onSearchClickDetail() {
             adapter.onItemClick = { meal ->
                 val intent = Intent(activity,DetailMealActivity::class.java)
                 intent.putExtra(Constants.MEAL_ID,meal.idMeal)
@@ -70,22 +72,11 @@ class SearchFragment : Fragment() {
             }
 
 
-    }
-
+    }*/
 
     private fun observeSearchLiveData() {
         viewModel.observerSearchMealLiveData().observe(viewLifecycleOwner) { mealList ->
-           adapter.setMealsearch(mealList)
-        }
-    }
-
-    //validacion
-    private fun searchMeals() {
-        val search = binding.etSearch.text.toString()
-        if (search.isNotEmpty()){
-            viewModel.searchMeal(search)
-        } else{
-            binding.tvNoMealsResult.visibility = View.VISIBLE
+            adapter.differ.submitList(mealList)
         }
     }
     //RecyclerView
@@ -96,6 +87,18 @@ class SearchFragment : Fragment() {
             adapter=adapter
         }
     }
+
+    //buscar sin tener que apretar icono
+    private fun click (){
+        var searchJob:Job?=null
+        binding.etSearch.addTextChangedListener{ search ->
+            searchJob?.cancel()
+            searchJob=lifecycleScope.launch{
+                delay(0)
+                viewModel.searchMeal(search.toString())
+            }
+
+        }}
 
 
 }

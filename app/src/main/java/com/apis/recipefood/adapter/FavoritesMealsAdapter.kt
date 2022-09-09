@@ -1,85 +1,50 @@
 package com.apis.recipefood.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.apis.recipefood.databinding.FavCardBinding
-import com.apis.recipefood.databinding.MealsItemBinding
-import com.apis.recipefood.pojo.CategoryMeals
 import com.apis.recipefood.pojo.Meal
-import com.apis.recipefood.pojo.MealList
 import com.bumptech.glide.Glide
 
-class FavoritesMealsAdapter:RecyclerView.Adapter<FavoritesMealsAdapter.FavoriteViewHolder>(){
+class FavoritesMealsAdapter:RecyclerView.Adapter<FavoritesMealsAdapter.FavoriteViewHolder>() {
 
-    private var favoriteMeal=ArrayList<Meal>()
-    private lateinit var onFavoriteClickListener:OnFavoriteClickListener
-    private lateinit var onFavoriteLongClickListener: OnFavoriteLongClickListener
+    private var favMeal  = ArrayList<Meal>()
+    private var onItemClick : ((Meal) -> Unit)? = null
 
-    inner class FavoriteViewHolder (val binding: FavCardBinding):RecyclerView.ViewHolder(binding.root)
-
-    fun setFavoriteMealsList(favoriteMeal: ArrayList<Meal>){
-        this.favoriteMeal=favoriteMeal
+    @SuppressLint("NotifyDataSetChanged")
+    fun setFavoriteList(mealsList: List<Meal>){
+        this.favMeal=mealsList as ArrayList<Meal>
         notifyDataSetChanged()
     }
 
-    fun getMealByPosition(position: Int):Meal{
-        return favoriteMeal[position]
+    fun getMealPosition(position: Int):Meal{
+        return favMeal[position]
     }
 
-    fun setOnFavoriteMealClickListener(onFavoriteClickListener: OnFavoriteClickListener){
-        this.onFavoriteClickListener=onFavoriteClickListener
-    }
-
-    fun setOnFavoriteLongClickListe(onFavoriteLongClickListener: OnFavoriteLongClickListener){
-        this.onFavoriteLongClickListener=onFavoriteLongClickListener
-    }
-
+    class FavoriteViewHolder(val binding: FavCardBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        return FavoriteViewHolder(FavCardBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return FavoriteViewHolder(FavCardBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        val i = position
-        holder.binding.apply {
-            tvFavName.text=favoriteMeal[position].strMealThumb
-            Glide.with(holder.itemView)
-                .load(favoriteMeal[position].strMealThumb)
-                .into(ivFavMeal)
-
-        }
-
+        val p = position
+        Glide.with(holder.itemView).load(favMeal[position].strMealThumb)
+            .into(holder.binding.ivFavMeal)
+        holder.binding.tvFavName.text = favMeal[position].strMeal
 
         holder.itemView.setOnClickListener {
-            onFavoriteClickListener.onFavoriteClick(favoriteMeal[position])
+            onItemClick!!.invoke(favMeal[position])
         }
-
-        holder.itemView.setOnLongClickListener {
-            onFavoriteLongClickListener.onFavoriteLongClick(favoriteMeal[i])
-            true
-        }
-
     }
-
-
 
     override fun getItemCount(): Int {
-       return favoriteMeal.size
+        return favMeal.size
     }
-
 }
 
-interface OnFavoriteLongClickListener {
-    fun onFavoriteLongClick(meal: Meal)
 
-}
 
-interface OnFavoriteClickListener {
-    fun onFavoriteClick(meal: Meal)
 
-}

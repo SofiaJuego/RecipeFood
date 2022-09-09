@@ -27,7 +27,7 @@ interface MealApi {
     suspend fun getMealsByCategory(@Query("c") categoryMealName:String): Response<CategoryList>
 
     @GET("search.php?")
-    suspend fun getMealByName(@Query("s")search:String):Response<MealList>
+    suspend fun getSearchMealByName(@Query("s")search:String):Response<MealList>
 
 
 }

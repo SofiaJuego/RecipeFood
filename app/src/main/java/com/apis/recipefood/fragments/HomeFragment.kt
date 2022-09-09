@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.apis.recipefood.R
 import com.apis.recipefood.activites.CategoryMealsActivity
 import com.apis.recipefood.activites.DetailMealActivity
-import com.apis.recipefood.adapter.CategoriesAdapter
+import com.apis.recipefood.adapter.CategoriesHomeAdapter
 import com.apis.recipefood.adapter.MealAdapter
 import com.apis.recipefood.util.Constants
 import com.apis.recipefood.databinding.FragmentHomeBinding
-import com.apis.recipefood.pojo.CategoryMeals
+import com.apis.recipefood.fragments.bottomsheet.BottomSheetFragment
 import com.apis.recipefood.pojo.Meal
 import com.apis.recipefood.viewmodel.MealViewModel
 import com.bumptech.glide.Glide
@@ -25,9 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding:FragmentHomeBinding
     private val mealMvvm : MealViewModel by viewModels()
-    private lateinit var randomMeal:Meal
+    private lateinit var randomMeal: Meal
     private lateinit var mealAdapter: MealAdapter
-    private lateinit var categoriesAdapter: CategoriesAdapter
+    private lateinit var categoriesHomeAdapter: CategoriesHomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +48,6 @@ class HomeFragment : Fragment() {
         categoriesRecyclerView()
 
         //RM
-        mealMvvm.getRandomMeal()
         observerRandomMeal()
         onRandomMealClick()
 
@@ -54,24 +55,72 @@ class HomeFragment : Fragment() {
         mealMvvm.getPopularItems()
         observerPopularItems()
         onPopularItemClick()
+        onPopularLongItemClick()
 
         //CM
         mealMvvm.getCategories()
         observerCategories()
         onCategoryClick()
 
+        //Search
+        onSearchIconClick()
 
+        //Loading
+        showLoadingCase()
 
+    }
+
+    private fun showLoadingCase() {
+        binding.apply {
+            loadingAnimation.visibility=View.VISIBLE
+
+            llHeader.visibility= View.INVISIBLE
+            tvQueTeGustariaComerHoy.visibility=View.INVISIBLE
+            cardRandomMeal.visibility=View.INVISIBLE
+            tvPopulares.visibility=View.INVISIBLE
+            rvMealsPopular.visibility=View.INVISIBLE
+            tvCategories.visibility=View.INVISIBLE
+            cardCategoriasMeals.visibility=View.INVISIBLE
+            rvMealsCategories.visibility=View.INVISIBLE
+            ivSearch.visibility=View.INVISIBLE
+        }
+
+    }
+
+    private fun onResponseCase() {
+        binding.apply {
+            loadingAnimation.visibility=View.INVISIBLE
+
+            llHeader.visibility= View.VISIBLE
+            tvQueTeGustariaComerHoy.visibility=View.VISIBLE
+            cardRandomMeal.visibility=View.VISIBLE
+            tvPopulares.visibility=View.VISIBLE
+            rvMealsPopular.visibility=View.VISIBLE
+            tvCategories.visibility=View.VISIBLE
+            cardCategoriasMeals.visibility=View.VISIBLE
+            rvMealsCategories.visibility=View.VISIBLE
+            ivSearch.visibility=View.VISIBLE
+        }
+
+    }
+
+    //Click en icono de buscar
+    private fun onSearchIconClick() {
+
+        binding.ivSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+
+        }
 
     }
 
 
     //RecyclerView
     private fun categoriesRecyclerView() {
-        categoriesAdapter = CategoriesAdapter()
+        categoriesHomeAdapter = CategoriesHomeAdapter()
         binding.rvMealsCategories.apply {
             layoutManager=GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
-            adapter = categoriesAdapter
+            adapter = categoriesHomeAdapter
 
         }
     }
@@ -89,14 +138,17 @@ class HomeFragment : Fragment() {
     private fun observerCategories() {
         mealMvvm.observerCategoriesLiveData().observe(viewLifecycleOwner) { categories ->
             categories.forEach { _ ->
-                categoriesAdapter.setCategoryList(categories)
+                onResponseCase()
+                categoriesHomeAdapter.setCategoryList(categories)
 
             }
         }
     }
 
+
+
     private fun onCategoryClick() {
-        categoriesAdapter.onItemClick = {category ->
+        categoriesHomeAdapter.onItemClick = { category ->
             val intent = Intent(activity,CategoryMealsActivity::class.java)
             intent.putExtra(Constants.CATEGORY_NAME,category.strCategory)
             startActivity(intent)
@@ -109,7 +161,8 @@ class HomeFragment : Fragment() {
     private fun observerPopularItems() {
        mealMvvm.observerPopularItemsLiveData().observe(viewLifecycleOwner)
        { mealList ->
-           mealAdapter.setMeals(mealList = mealList as ArrayList<CategoryMeals>)
+           onResponseCase()
+           mealAdapter.setMeals(categoryMeals = mealList as ArrayList<Meal>)
 
        }
 
@@ -127,10 +180,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun onPopularLongItemClick() {
+      mealAdapter.onItemLongClick={ meal ->
+          val bottomSheetFragment=BottomSheetFragment.newInstance(meal.idMeal)
+          bottomSheetFragment.show(childFragmentManager,"Meal info")
 
-
-
-
+      }
+    }
 
     //<!--COMIDA ALEATORIA -->
 
@@ -148,6 +204,7 @@ class HomeFragment : Fragment() {
     }
     private fun observerRandomMeal() {
         mealMvvm.observerRamdonMealLiveData().observe(viewLifecycleOwner) { meal ->
+            onResponseCase()
             Glide.with(this@HomeFragment)
                 .load(meal!!.strMealThumb)
                 .into(binding.ivRandomMeal)

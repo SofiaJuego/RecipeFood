@@ -1,6 +1,7 @@
 package com.apis.recipefood.repository
 
 
+import androidx.lifecycle.LiveData
 import com.apis.recipefood.db.MealDataBase
 import com.apis.recipefood.pojo.Meal
 import javax.inject.Inject
@@ -16,8 +17,8 @@ class DataBaseRepository
         mealDataBase.mealDao().delete(meal)
     }
 
-    suspend fun allMeals(){
-        mealDataBase.mealDao().getAllMeals()
+    fun allMeals():LiveData<List<Meal>>{
+        return mealDataBase.mealDao().getAllMeals()
     }
 
     suspend fun getById(id:String){

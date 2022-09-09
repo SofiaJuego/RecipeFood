@@ -13,6 +13,7 @@ constructor(private val mealApi: MealApi){
     suspend fun popularMeal(categoryName:String)=mealApi.getPopularItems(categoryName)
     suspend fun categoriesMeal()=mealApi.getCategories()
     suspend fun mealByCategory(categoryMealName:String)=mealApi.getMealsByCategory(categoryMealName)
+    suspend fun searchBymeals(search:String)=mealApi.getSearchMealByName(search)
 
 
 

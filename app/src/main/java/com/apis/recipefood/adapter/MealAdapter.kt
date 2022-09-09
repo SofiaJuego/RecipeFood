@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apis.recipefood.databinding.PopularItemBinding
-import com.apis.recipefood.pojo.CategoryMeals
+import com.apis.recipefood.pojo.Meal
 import com.bumptech.glide.Glide
 
 class MealAdapter:RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
-    lateinit var onItemClick: ((CategoryMeals) -> Unit)
-    private var mealsList = ArrayList<CategoryMeals>()
+    lateinit var onItemClick: ((Meal) -> Unit)
+    var onItemLongClick : ((Meal) -> Unit)? = null
+    private var mealsList = ArrayList<Meal>()
 
 
-    fun setMeals(mealList: ArrayList<CategoryMeals>){
-        this.mealsList=mealList
+    fun setMeals(categoryMeals: ArrayList<Meal>){
+        this.mealsList=categoryMeals
         notifyDataSetChanged()
     }
 
@@ -32,6 +33,10 @@ class MealAdapter:RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
         holder.itemView.setOnClickListener{
             onItemClick.invoke(mealsList[position])
+        }
+        holder.itemView.setOnLongClickListener{
+            onItemLongClick?.invoke(mealsList[position])
+            true
         }
     }
 
