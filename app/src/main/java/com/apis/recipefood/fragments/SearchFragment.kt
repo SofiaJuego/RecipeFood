@@ -41,7 +41,7 @@ class SearchFragment : Fragment() {
         //RC
         //searchRecyclerView()
 
-       //observeSearchLiveData()
+        observeSearchLiveData()
         onSearchClickDetail()
         onIconSearchClick()
 
@@ -75,11 +75,9 @@ class SearchFragment : Fragment() {
 
     }
 
-    fun search(){
-        binding.cardSearch.setOn
-    }
 
-    /*private fun observeSearchLiveData() {
+
+    private fun observeSearchLiveData() {
         viewModel.observerSearchMealLiveData().observe(viewLifecycleOwner
         ) { t ->
             if (t == null) {
@@ -99,7 +97,7 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-    }*/
+    }
    /* //RecyclerView
     private fun searchRecyclerView() {
         adapter= SearchAdapter()
