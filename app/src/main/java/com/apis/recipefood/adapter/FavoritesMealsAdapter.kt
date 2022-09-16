@@ -30,7 +30,6 @@ class FavoritesMealsAdapter:RecyclerView.Adapter<FavoritesMealsAdapter.FavoriteV
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        val p = position
         Glide.with(holder.itemView).load(favMeal[position].strMealThumb)
             .into(holder.binding.ivFavMeal)
         holder.binding.tvFavName.text = favMeal[position].strMeal

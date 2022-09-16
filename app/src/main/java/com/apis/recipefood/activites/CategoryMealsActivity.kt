@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CategoryMealsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCategoryMealsBinding
-    private lateinit var detailCategoryMeal: Meal
     //Instacia de viewmodel
     private val  categoryMealsViewModel:MealViewModel by viewModels()
     private lateinit var categoryMealsAdapter:CategoryMealsAdapter
@@ -33,12 +33,15 @@ class CategoryMealsActivity : AppCompatActivity() {
 
         onMealItemClick()
 
+        showLoadingCase()
+
 
 
 
       categoryMealsViewModel.getMealsByCategory(intent.getStringExtra(Constants.CATEGORY_NAME)!!)
 
         categoryMealsViewModel.observerMealsLiveData().observe(this, Observer { mealsList ->
+            onResponseCase()
             binding.tvCategoryCount.text="Count: ${mealsList.size}"
             categoryMealsAdapter.setCategoriesList(mealsList)
             })
@@ -55,6 +58,30 @@ class CategoryMealsActivity : AppCompatActivity() {
            intent.putExtra(Constants.MEAL_THUMB,it.strMealThumb)
            startActivity(intent)
        }
+
+    }
+
+
+    private fun showLoadingCase() {
+        binding.apply {
+            loadingAnimation.visibility= View.VISIBLE
+
+            tvCategoryCount.visibility= View.INVISIBLE
+            rvMeals.visibility= View.INVISIBLE
+
+        }
+
+    }
+
+    private fun onResponseCase() {
+        binding.apply {
+            loadingAnimation.visibility= View.INVISIBLE
+
+            tvCategoryCount.visibility= View.VISIBLE
+            rvMeals.visibility= View.VISIBLE
+
+
+        }
 
     }
 

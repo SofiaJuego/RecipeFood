@@ -5,21 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apis.recipefood.activites.DetailMealActivity
 import com.apis.recipefood.adapter.SearchAdapter
 import com.apis.recipefood.databinding.FragmentSearchBinding
+import com.apis.recipefood.pojo.Meal
 import com.apis.recipefood.util.Constants.Companion.MEAL_ID
 import com.apis.recipefood.util.Constants.Companion.MEAL_NAME
 import com.apis.recipefood.util.Constants.Companion.MEAL_THUMB
 import com.apis.recipefood.viewmodel.MealViewModel
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment() , SearchView.OnQueryTextListener{
     private lateinit var binding: FragmentSearchBinding
     private val viewModel:MealViewModel by viewModels()
     private lateinit var adapter: SearchAdapter
@@ -36,35 +38,29 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = SearchAdapter()
+
 
         //RC
-        //searchRecyclerView()
+        searchRecyclerView()
+        viewModel.searchMeal(mealStr)
 
-        observeSearchLiveData()
+        //observeSearchLiveData()
         onSearchClickDetail()
-        onIconSearchClick()
 
-
-
-
-
-
-
-
+       // onIconSearchClick()
 
 
     }
 
-    private fun onIconSearchClick() {
+   /* private fun onIconSearchClick() {
         binding.ivSearch.setOnClickListener {
             viewModel.searchMeal(binding.etSearch.text.toString())
         }
-    }
+    }*/
 
 
     private fun onSearchClickDetail() {
-            binding.cardSearch.setOnClickListener {
+           adapter.onItemClick = {
                 val intent = Intent(context, DetailMealActivity::class.java)
                 intent.putExtra(MEAL_ID,mealId)
                 intent.putExtra(MEAL_NAME,mealStr)
@@ -75,37 +71,66 @@ class SearchFragment : Fragment() {
 
     }
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null){
+            searchMeal()
+        } else {
+            binding.rvSearch.visibility = View.VISIBLE
+        }
+        return true
+    }
 
 
-    private fun observeSearchLiveData() {
-        viewModel.observerSearchMealLiveData().observe(viewLifecycleOwner
-        ) { t ->
-            if (t == null) {
-                binding.tvNoMealsResult.visibility = View.VISIBLE
-            } else {
-                binding.apply {
-                    mealId = t. idMeal
-                    mealStr = t.strMeal.toString()
-                    mealThumb = t.strMealThumb.toString()
+    override fun onQueryTextChange(query: String?): Boolean {
 
-                    Glide.with(requireContext().applicationContext)
-                        .load(t.strMealThumb)
-                        .into(ivSearchMeal)
+        if (query != null){
+            searchMeal()
+        } else {
+            binding.rvSearch.visibility = View.VISIBLE
+        }
+        return true
 
-                    tvSearchName.text = t.strMeal
-                    cardSearch.visibility = View.VISIBLE
-                }
-            }
+    }
+
+    private fun searchMeal() {
+        viewModel.observerSearchMealLiveData().observe(viewLifecycleOwner) { mealList ->
+            adapter.setMealList(mealList)
         }
     }
-   /* //RecyclerView
+
+
+
+    /* private fun observeSearchLiveData() {
+         viewModel.observerSearchMealLiveData().observe(viewLifecycleOwner
+         ) { t ->
+             if (t == null) {
+                 binding.tvNoMealsResult.visibility = View.VISIBLE
+             } else {
+                 binding.apply {
+                     mealId = t. idMeal
+                     mealStr = t.strMeal.toString()
+                     mealThumb = t.strMealThumb.toString()
+
+                     Glide.with(requireContext().applicationContext)
+                         .load(t.strMealThumb)
+                         .into(ivSearchMeal)
+
+                     tvSearchName.text = t.strMeal
+                     cardSearch.visibility = View.VISIBLE
+                 }
+             }
+         }
+     }*/
+
+
+ //RecyclerView
     private fun searchRecyclerView() {
         adapter= SearchAdapter()
         binding.rvSearch.apply {
-            layoutManager=LinearLayoutManager(context)
+            layoutManager= LinearLayoutManager(context)
             adapter=adapter
         }
-    }*/
+    }
 
 
 

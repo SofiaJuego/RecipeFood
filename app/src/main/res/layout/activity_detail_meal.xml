@@ -96,13 +96,35 @@
                     android:layout_weight="1"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linear_video"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:elevation="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_details"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout">
+
+                <ImageView
+                    android:id="@+id/iv_youtube"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="35dp"
+                    android:src="@drawable/ic_youtube" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/tv_instrucciones"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Instrucciones"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout"
+                app:layout_constraintTop_toBottomOf="@+id/linear_video"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
@@ -127,13 +149,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <ImageView
-        android:id="@+id/iv_youtube"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_gravity="bottom|center"
-        android:src="@drawable/ic_youtube"
-        android:layout_marginBottom="10dp"/>
+
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_bar"

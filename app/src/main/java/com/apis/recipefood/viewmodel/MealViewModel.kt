@@ -25,7 +25,7 @@ constructor( private val repository: MealRepository, private val dbRepository: D
     private var mealsLiveData = MutableLiveData<List<Meal>>()
     private var favoriteMealsLiveData= dbRepository.allMeals()
     private var bottomSheetLiveData = MutableLiveData<Meal>()
-    private var searchMealLiveData=MutableLiveData<Meal>()
+    private var searchMealLiveData=MutableLiveData<List<Meal>>()
 
 
 
@@ -154,7 +154,7 @@ constructor( private val repository: MealRepository, private val dbRepository: D
     fun searchMeal(search:String)=viewModelScope.launch{
         repository.searchBymeals(search).let { response ->
             if (response.isSuccessful){
-            searchMealLiveData.postValue(response.body()?.meals!![0])
+            searchMealLiveData.postValue(response.body()?.meals)
 
             }else {
                 Log.e("HomeFragment", "getSearch:Error response ${response.message()}")
@@ -163,7 +163,7 @@ constructor( private val repository: MealRepository, private val dbRepository: D
 
     }
 
-    fun observerSearchMealLiveData():LiveData<Meal> = searchMealLiveData
+    fun observerSearchMealLiveData():LiveData<List<Meal>> = searchMealLiveData
 
 
 

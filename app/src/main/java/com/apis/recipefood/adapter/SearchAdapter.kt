@@ -1,6 +1,7 @@
 package com.apis.recipefood.adapter
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,18 +12,17 @@ import com.bumptech.glide.Glide
 
 class SearchAdapter:RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
-    private var mealList:List<Meal> = ArrayList()
-    private lateinit var setOnMealClickListener:SetOnMealClickListener
+    private var mealList = ArrayList<Meal>()
 
+    var onItemClick : ((Meal) -> Unit)? = null
+
+    @SuppressLint("NotifyDataSetChanged")
     fun setMealList(mealList: List<Meal>){
-        this.mealList=mealList
+        this.mealList= mealList as ArrayList<Meal>
+        mealList.clear()
+        mealList.addAll(mealList)
         notifyDataSetChanged()
     }
-
-    fun setOnClickListener(setOnMealClickListener: SetOnMealClickListener){
-        this.setOnMealClickListener= setOnMealClickListener
-    }
-
 
 
 
@@ -41,7 +41,7 @@ class SearchAdapter:RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
        }
 
         holder.itemView.setOnClickListener {
-            setOnMealClickListener.setOnClickListener(mealList[position])
+            onItemClick!!.invoke(mealList[position])
         }
     }
 

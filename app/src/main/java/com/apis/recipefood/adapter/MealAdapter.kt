@@ -31,6 +31,7 @@ class MealAdapter:RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
             .load(mealsList[position].strMealThumb)
             .into(holder.binding.ivPopularItem)
 
+
         holder.itemView.setOnClickListener{
             onItemClick.invoke(mealsList[position])
         }

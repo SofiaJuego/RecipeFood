@@ -83,6 +83,7 @@ class HomeFragment : Fragment() {
             cardCategoriasMeals.visibility=View.INVISIBLE
             rvMealsCategories.visibility=View.INVISIBLE
             ivSearch.visibility=View.INVISIBLE
+            cardMenuRandomMeal.visibility=View.INVISIBLE
         }
 
     }
@@ -100,6 +101,7 @@ class HomeFragment : Fragment() {
             cardCategoriasMeals.visibility=View.VISIBLE
             rvMealsCategories.visibility=View.VISIBLE
             ivSearch.visibility=View.VISIBLE
+            cardMenuRandomMeal.visibility=View.VISIBLE
         }
 
     }
@@ -205,6 +207,9 @@ class HomeFragment : Fragment() {
     private fun observerRandomMeal() {
         mealMvvm.observerRamdonMealLiveData().observe(viewLifecycleOwner) { meal ->
             onResponseCase()
+            binding.tvMeal.text= meal.strMeal
+            binding.tvArea.text=meal.strArea
+            binding.tvCategoryRecommendation.text=meal.strCategory
             Glide.with(this@HomeFragment)
                 .load(meal!!.strMealThumb)
                 .into(binding.ivRandomMeal)
